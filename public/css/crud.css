@@ -1,0 +1,211 @@
+/* GMCore CRUD Bundle - Shared Styles */
+.gmcore-crud-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+.gmcore-crud-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.gmcore-crud-table th,
+.gmcore-crud-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.gmcore-crud-table th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gmcore-crud-table th.sortable:hover {
+  background: #e2e8f0;
+}
+
+.gmcore-crud-table th.sorted-asc::after {
+  content: ' \\25B2';
+  font-size: 0.7em;
+}
+
+.gmcore-crud-table th.sorted-desc::after {
+  content: ' \\25BC';
+  font-size: 0.7em;
+}
+
+.gmcore-crud-table tr:hover td {
+  background: #f1f5f9;
+}
+
+.gmcore-crud-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.gmcore-crud-pagination .page-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.gmcore-crud-pagination button {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.gmcore-crud-pagination button.active {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+}
+
+.gmcore-crud-pagination button:hover:not(.active) {
+  background: #f1f5f9;
+}
+
+.gmcore-crud-search {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.gmcore-crud-search input {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.gmcore-crud-search::before {
+  content: '\\1F50D';
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  opacity: 0.5;
+}
+
+.gmcore-crud-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.gmcore-crud-actions .action-btn {
+  padding: 0.25rem 0.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.gmcore-crud-actions .action-btn:hover {
+  background: #e2e8f0;
+}
+
+.gmcore-crud-actions .action-btn.danger {
+  color: #ef4444;
+}
+
+.gmcore-crud-actions .action-btn.danger:hover {
+  background: #fef2f2;
+}
+
+.gmcore-crud-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.gmcore-crud-modal {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  max-width: 640px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.gmcore-crud-modal-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gmcore-crud-modal-body {
+  padding: 1.5rem;
+}
+
+.gmcore-crud-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.gmcore-crud-form-group {
+  margin-bottom: 1rem;
+}
+
+.gmcore-crud-form-group label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.gmcore-crud-form-group input,
+.gmcore-crud-form-group select,
+.gmcore-crud-form-group textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.gmcore-toast {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.875rem;
+  z-index: 2000;
+  animation: gmcore-fade-in 0.2s ease;
+}
+
+.gmcore-toast.success { background: #10b981; }
+.gmcore-toast.error { background: #ef4444; }
+.gmcore-toast.info { background: #3b82f6; }
+
+@keyframes gmcore-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

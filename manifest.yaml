@@ -1,0 +1,38 @@
+name: crud-bundle
+package: gmcore/crud-bundle
+module: github.com/gmcorenet/bundle-crud
+version: 0.1.0
+description: Reusable AJAX CRUD runtime for GMCore applications
+author:
+  name: Ignacio Perez
+  email: ipforner@gmail.com
+license: MIT
+provides:
+  - crud
+  - ajax-runtime
+  - admin-runtime
+  - form-designer
+  - relation-pickers
+requires:
+  go: ">=1.26"
+  sdk:
+    - gmcore-bundle
+    - gmcore-crud
+    - gmcore-form
+    - gmcore-router
+    - gmcore-security
+    - gmcore-i18n
+    - gmcore-templating
+bootstrap:
+  import: "github.com/gmcorenet/bundle-crud"
+recipe:
+  file: recipe.yaml
+install:
+  config: config/packages
+install_notes:
+  - Add github.com/gmcorenet/bundle-crud to go.mod
+  - Import _ "github.com/gmcorenet/bundle-crud" for auto-registration
+  - Render resources with crud.CRUD() template function
+remove_notes:
+  - Remove config/packages/crud.yaml if no other installed code needs it
+  - Remove import _ "github.com/gmcorenet/bundle-crud"

@@ -1,0 +1,43 @@
+crud:
+  default_theme: gmcore
+  pagination:
+    default_per_page: 25
+    allowed_per_page: [10, 25, 50, 100]
+    max_per_page: 500
+    default_mode: exact
+  state:
+    storage: local_storage
+    remember_per_page: true
+    remember_filters: true
+    remember_sort: true
+    remember_columns: true
+  permissions:
+    deny_by_default: true
+    default_view: ROLE_ADMIN
+    default_create: null
+    default_edit: null
+    default_delete: null
+    default_export: null
+    default_design: null
+    default_debug: null
+  debug:
+    enabled: true
+    collector_enabled: true
+    show_policy_reasons: true
+  filters:
+    search_delay_ms: 250
+    advanced_modal_lazy: true
+    max_relation_options_per_page: 20
+  relations:
+    async: true
+    page_size: 20
+    load_all_limit: 500
+  designer:
+    enabled: true
+    persist_layouts: true
+  exports:
+    enabled: true
+    formats: [txt, csv, pdf]
+  security:
+    csrf: true
+    validate_query_parameters: true

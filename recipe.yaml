@@ -1,0 +1,13 @@
+install:
+  - action: copy_tree
+    from: config/packages
+    to: config/packages
+  - action: register_go_mod
+    name: github.com/gmcorenet/bundle-crud
+    optional: true
+remove:
+  - action: delete
+    path: config/packages/crud.yaml
+  - action: remove_go_mod
+    name: github.com/gmcorenet/bundle-crud
+    optional: true
