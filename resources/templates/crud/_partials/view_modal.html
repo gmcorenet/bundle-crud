@@ -1,0 +1,28 @@
+<div class="crud-gmcore-modal-panel">
+    <div class="crud-gmcore-modal-header">
+        <div class="crud-gmcore-eyebrow">GMCore Admin</div>
+        <h2>{{ .config.TitleKey }}</h2>
+        <button type="button" class="crud-gmcore-modal-close" data-gmcrud-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div class="crud-gmcore-modal-body">
+        <div class="crud-gmcore-detail-card">
+            {{ range .config.Fields }}
+            {{ if .Visible }}
+            <div class="crud-gmcore-detail-row">
+                <div>{{ .LabelKey }}</div>
+                <div>{{ include "crud/_partials/value.html" (dict "value" (index $.record .Name)) }}</div>
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+    </div>
+    <div class="gmui-form-actions">
+        <button type="button" class="gmui-btn is-ghost" data-gmcrud-modal-close>Close</button>
+        {{ if .config.Permissions.IsEnabled "edit" }}
+        <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}/{{ .recordId }}/edit" class="gmui-btn is-primary" data-gmcrud-modal-link>
+            <span class="gmui-symbol" aria-hidden="true">&#9998;</span>
+            <span>Edit</span>
+        </a>
+        {{ end }}
+    </div>
+</div>

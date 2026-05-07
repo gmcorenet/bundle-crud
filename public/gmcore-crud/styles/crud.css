@@ -1,0 +1,9 @@
+/* GMCore CRUD Bundle - Base Styles */
+.gmcore-crud-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+@keyframes gmcore-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,34 @@
+<div class="crud-gmcore-modal-panel">
+    <div class="crud-gmcore-modal-header">
+        <div class="crud-gmcore-modal-icon crud-designer-title-icon">&#9638;</div>
+        <div class="crud-gmcore-modal-heading">
+            <div class="crud-gmcore-eyebrow">GMCore Admin</div>
+            <h2>Designer: {{ .config.TitleKey }}</h2>
+            <p class="crud-designer-header-copy">Drag and drop fields to customize the form layout</p>
+        </div>
+        <button type="button" class="crud-gmcore-modal-close" data-gmcrud-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div class="crud-gmcore-modal-body crud-designer-body">
+        <div class="crud-designer-workspace">
+            <div class="crud-designer-canvas" id="crud-designer-canvas"></div>
+        </div>
+    </div>
+    <div class="gmui-form-actions crud-designer-footer">
+        <div class="crud-designer-footer-panel">
+            <div class="crud-designer-footer-main">
+                <div class="crud-designer-toolbar" id="crud-designer-toolbar"></div>
+            </div>
+            <div class="crud-designer-footer-side">
+                <div class="crud-designer-controlbar" id="crud-designer-controlbar"></div>
+            </div>
+            <div class="crud-designer-footer-bottom">
+                <div class="crud-designer-hidden-tray" id="crud-designer-hidden-tray"></div>
+                <div class="crud-designer-footer-actions">
+                    <button class="gmui-btn is-ghost" type="button" id="crud-designer-reset">Reset</button>
+                    <button class="gmui-btn is-ghost" type="button" data-gmcrud-modal-close>Cancel</button>
+                    <button class="gmui-btn is-primary" type="button" id="crud-designer-save">Save Layout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

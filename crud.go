@@ -2,22 +2,27 @@ package crud
 
 import (
 	"context"
+	"html/template"
 	"net/http"
 
 	gmcore_bundle "github.com/gmcorenet/sdk/gmcore-bundle"
+	gmcore_templating "github.com/gmcorenet/sdk/gmcore-templating"
 	"github.com/gmcorenet/bundle-crud/internal/controller"
 	"github.com/gmcorenet/bundle-crud/internal/export"
 	"github.com/gmcorenet/bundle-crud/internal/filter"
 	"github.com/gmcorenet/bundle-crud/internal/model"
 	"github.com/gmcorenet/bundle-crud/internal/registry"
 	"github.com/gmcorenet/bundle-crud/internal/service"
+	"github.com/gmcorenet/bundle-crud/internal/twig"
 )
 
 var (
-	Registry        *registry.CrudRegistry
-	ConfigDefaults  *model.ConfigDefaults
-	FilterRegistry  *filter.FilterTypeRegistry
+	Registry         *registry.CrudRegistry
+	ConfigDefaults   *model.ConfigDefaults
+	FilterRegistry   *filter.FilterTypeRegistry
 	ExporterRegistry *export.ExportRegistry
+	CrudTwigRuntime  *twig.CrudRuntime
+	CrudTwigExtension *twig.CrudExtension
 )
 
 func init() {
@@ -34,6 +39,8 @@ type Bundle struct {
 	FilterRegistry   *filter.FilterTypeRegistry
 	ExporterRegistry *export.ExportRegistry
 	controllers      *controller.CrudRouter
+	twigRuntime      *twig.CrudRuntime
+	twigExtension    *twig.CrudExtension
 }
 
 func NewBundle() *Bundle {
@@ -66,6 +73,27 @@ func (b *Bundle) Boot(ctx context.Context) error {
 	)
 
 	return nil
+}
+
+func (b *Bundle) InitTemplating(engine *gmcore_templating.Engine) {
+	b.twigRuntime = twig.NewCrudRuntime(Registry, engine, ConfigDefaults, "gmcore")
+	b.twigExtension = twig.NewCrudExtension(b.twigRuntime)
+	CrudTwigRuntime = b.twigRuntime
+	CrudTwigExtension = b.twigExtension
+}
+
+func (b *Bundle) TemplateFunctions() map[string]interface{} {
+	if b.twigRuntime == nil {
+		return nil
+	}
+	funcs := make(map[string]interface{})
+	funcs["gmcore_crud"] = func(resource string, withAssets bool) template.HTML {
+		return b.twigRuntime.ShowCrud(context.Background(), resource, withAssets, "anonymous")
+	}
+	funcs["gmcore_crud_as"] = func(resource string, withAssets bool, userIdentifier string) template.HTML {
+		return b.twigRuntime.ShowCrud(context.Background(), resource, withAssets, userIdentifier)
+	}
+	return funcs
 }
 
 func (b *Bundle) Shutdown() error {

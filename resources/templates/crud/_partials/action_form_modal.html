@@ -1,0 +1,30 @@
+<div class="crud-gmcore-modal-panel">
+    <div class="crud-gmcore-modal-header">
+        <div class="crud-gmcore-eyebrow">GMCore Admin</div>
+        <h2>{{ .action.LabelKey }}</h2>
+        <button type="button" class="crud-gmcore-modal-close" data-gmcrud-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div class="crud-gmcore-modal-body">
+        <form
+            action="{{ .actionUrl }}"
+            method="post"
+            class="crud-gmcore-modal-form-shell"
+            data-gmcrud-modal-form="1"
+            data-gmcrud-form-mode="action"
+            data-gmcrud-client-hook="{{ .clientHook }}"
+        >
+            <div class="crud-gmcore-form-grid">
+                {{ range .action.FormFields }}
+                <div class="crud-gmcore-field-card" data-gmcrud-form-field="{{ .Name }}">
+                    <div class="crud-gmcore-field-label-row">
+                        <label>{{ .LabelKey }}</label>
+                    </div>
+                    <input type="text" name="{{ .Name }}" class="gmui-input">
+                </div>
+                {{ end }}
+            </div>
+            <button type="button" class="gmui-btn is-ghost" data-gmcrud-modal-close>Cancel</button>
+            <button type="submit" class="gmui-btn is-primary">Submit</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="gmui-panel-card gmui-toolbar-panel gmui-table-searchbar" data-gmcrud-toolbar>
+    <div class="gmui-toolbar-row">
+        <div class="gmui-toolbar-search">
+            <label class="gmui-sr-only" for="crud-search">Search</label>
+            <input
+                type="search"
+                id="crud-search"
+                name="q"
+                value="{{ .params.Search }}"
+                placeholder="Search..."
+                class="gmui-input"
+                data-gmcrud-search
+            >
+            <input type="hidden" name="_crud_instance" value="{{ .crudInstanceId }}">
+            <input type="hidden" name="per_page" value="{{ .params.PerPage }}">
+        </div>
+        <div class="gmui-toolbar-actions">
+            {{ if .config.FeatureEnabled "filters" }}
+            <button type="button" class="gmui-btn is-secondary" data-gmcrud-filters-open>
+                <span class="gmui-symbol" aria-hidden="true">&equiv;</span>
+                <span>Advanced Filters</span>
+            </button>
+            {{ end }}
+            <button type="button" class="gmui-btn {{ if .params.Search }}is-warning{{ else }}is-ghost{{ end }}" data-gmcrud-reset>
+                <span class="gmui-symbol" aria-hidden="true">&times;</span>
+                <span>Reset</span>
+            </button>
+            {{ if and (.config.FeatureEnabled "design") (.config.Permissions.IsEnabled "design") }}
+            <button type="button" class="gmui-btn is-secondary" data-gmcrud-designer-open>
+                <span class="gmui-symbol" aria-hidden="true">&#9881;</span>
+                <span>Designer</span>
+            </button>
+            {{ end }}
+            {{ if and (.config.FeatureEnabled "debug") (.config.Permissions.IsEnabled "debug") }}
+            <button type="button" class="gmui-btn is-secondary" data-gmcrud-debug-open data-gmcrud-debug-url="/_gmcore/crud/{{ .config.Name }}/debug/modal">
+                <span class="gmui-symbol" aria-hidden="true">?</span>
+                <span>Debug</span>
+            </button>
+            {{ end }}
+            {{ if and (.config.FeatureEnabled "create") (.config.Permissions.IsEnabled "create") }}
+            <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}/new" class="gmui-btn is-primary" data-gmcrud-modal-link>
+                <span class="gmui-symbol" aria-hidden="true">+</span>
+                <span>Create</span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+    {{ if .filterSummaries }}
+    <div class="gmui-filter-chips">
+        {{ range .filterSummaries }}
+        <span class="gmui-filter-chip" data-gmcrud-filter-chip data-gmcrud-filter-source="{{ .source }}" data-gmcrud-filter-field="{{ .field }}">
+            <span>{{ .label }}: {{ .operator }} "{{ .value }}"</span>
+            <button type="button" class="gmui-filter-chip-remove" aria-label="Remove filter" data-gmcrud-filter-chip-remove>&times;</button>
+        </span>
+        {{ end }}
+    </div>
+    {{ end }}
+</div>
+
+{{ if .config.FeatureEnabled "filters" }}
+<div class="gmcrud-advanced-filter-state" data-gmcrud-advanced-filter-state hidden>
+    {{ range .config.Fields }}
+    {{ if .Filterable }}
+    <input type="hidden" name="advanced_filter[{{ .Name }}][operator]" value="eq" data-gmcrud-advanced-operator="{{ .Name }}" data-gmcrud-advanced-default-operator="eq">
+    <input type="hidden" name="advanced_filter[{{ .Name }}][value]" value="" data-gmcrud-advanced-value="{{ .Name }}">
+    {{ end }}
+    {{ end }}
+</div>
+{{ end }}
+
+{{ include "crud/_partials/table.html" . }}

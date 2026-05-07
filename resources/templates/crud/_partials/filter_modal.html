@@ -1,0 +1,65 @@
+<div class="crud-gmcore-modal-panel">
+    <div class="crud-gmcore-modal-header">
+        <div class="crud-gmcore-eyebrow">GMCore Admin</div>
+        <h2>Advanced Filters</h2>
+        <button type="button" class="crud-gmcore-modal-close" data-gmcrud-filters-close aria-label="Close">&times;</button>
+    </div>
+    <div class="crud-gmcore-modal-body">
+        <div class="crud-gmcore-filter-table-wrap gmui-table-card gmui-table-wrap" data-gmcrud-filter-editor>
+            <table class="crud-gmcore-filter-table gmui-table">
+                <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Operator</th>
+                    <th>Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ range .config.Fields }}
+                {{ if .Filterable }}
+                <tr data-gmcrud-filter-row="{{ .Name }}" data-gmcrud-filter-default-operator="eq">
+                    <td>{{ .LabelKey }}</td>
+                    <td>
+                        <select class="gmui-select" data-gmcrud-filter-operator>
+                            <option value="eq">equals</option>
+                            <option value="neq">not equals</option>
+                            <option value="like">contains</option>
+                            <option value="gt">greater than</option>
+                            <option value="lt">less than</option>
+                            <option value="gte">greater or equal</option>
+                            <option value="lte">less or equal</option>
+                            <option value="is_null">is null</option>
+                            <option value="is_not_null">is not null</option>
+                        </select>
+                    </td>
+                    <td>
+                        {{ if eq .Widget "boolean" }}
+                        <select class="gmui-select" data-gmcrud-filter-value data-gmcore-choice="1">
+                            <option value="">Any value</option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                            <option value="__null__">Null</option>
+                        </select>
+                        {{ else if eq .Widget "number" }}
+                        <input type="number" value="" class="gmui-input" data-gmcrud-filter-value>
+                        {{ else if eq .Widget "date" }}
+                        <input type="date" value="" class="gmui-input" data-gmcrud-filter-value>
+                        {{ else if eq .Widget "datetime" }}
+                        <input type="datetime-local" value="" class="gmui-input" data-gmcrud-filter-value>
+                        {{ else }}
+                        <input type="text" value="" class="gmui-input" data-gmcrud-filter-value>
+                        {{ end }}
+                    </td>
+                </tr>
+                {{ end }}
+                {{ end }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="gmui-form-actions">
+        <button type="button" class="gmui-btn is-ghost" data-gmcrud-filters-close>Cancel</button>
+        <button type="button" class="gmui-btn is-ghost" data-gmcrud-filters-clear>Reset Filters</button>
+        <button type="button" class="gmui-btn is-primary" data-gmcrud-filters-apply>Apply</button>
+    </div>
+</div>

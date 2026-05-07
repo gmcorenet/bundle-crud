@@ -16,6 +16,10 @@ require (
 	gorm.io/gorm v1.25.10 // indirect
 )
 
+require (
+	github.com/gmcorenet/sdk/gmcore-templating v0.0.0
+)
+
 replace (
 	github.com/gmcorenet/sdk/gmcore-bundle => ../../sdks/gmcore-bundle
 	github.com/gmcorenet/sdk/gmcore-crud => ../../sdks/gmcore-crud

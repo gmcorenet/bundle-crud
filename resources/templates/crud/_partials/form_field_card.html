@@ -1,0 +1,28 @@
+<div class="crud-gmcore-field-card" data-gmcrud-form-field="{{ .Name }}">
+    <div class="crud-gmcore-field-label-row">
+        <label>{{ .LabelKey }}</label>
+    </div>
+    {{ if eq .Widget "textarea" }}
+    <textarea name="{{ .Name }}" class="gmui-input" rows="4"></textarea>
+    {{ else if eq .Widget "number" }}
+    <input type="number" name="{{ .Name }}" class="gmui-input">
+    {{ else if eq .Widget "date" }}
+    <input type="date" name="{{ .Name }}" class="gmui-input">
+    {{ else if eq .Widget "datetime" }}
+    <input type="datetime-local" name="{{ .Name }}" class="gmui-input">
+    {{ else if eq .Widget "checkbox" }}
+    <input type="checkbox" name="{{ .Name }}" value="1" class="gmui-checkbox">
+    {{ else if eq .Widget "select" }}
+    <select name="{{ .Name }}" class="gmui-select">
+        <option value=""></option>
+        {{ range $val, $label := .Choices }}
+        <option value="{{ $val }}">{{ $label }}</option>
+        {{ end }}
+    </select>
+    {{ else }}
+    <input type="{{ .Widget }}" name="{{ .Name }}" class="gmui-input">
+    {{ end }}
+    {{ if .Help }}
+    <p class="gmui-field-help">{{ .Help }}</p>
+    {{ end }}
+</div>

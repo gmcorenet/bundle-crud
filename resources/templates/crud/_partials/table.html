@@ -1,0 +1,147 @@
+{{ $actionsEnabled := gt (len (.config.ResolvedRowActions)) 0 }}
+{{ $bulkEnabled := gt (len (.config.ResolvedBulkActions)) 0 }}
+
+<div class="crud-gmcore-table-controls crud-gmcore-table-controls-top gmui-table-controls">
+    <div class="crud-gmcore-table-control-group gmui-table-control-group">
+        {{ if $bulkEnabled }}
+        <label class="gmui-inline-control">
+            <span>Bulk Actions</span>
+            <select class="gmui-select" data-gmcrud-bulk-action>
+                <option value="">Select action...</option>
+                {{ range .config.ResolvedBulkActions }}
+                <option value="{{ .Name }}">{{ .LabelKey }}</option>
+                {{ end }}
+            </select>
+        </label>
+        <button type="button" class="gmui-btn is-secondary" data-gmcrud-bulk-apply>Apply</button>
+        {{ end }}
+        <label class="gmui-inline-control">
+            <span>Per page</span>
+            <select class="gmui-select" name="per_page" data-gmcrud-per-page>
+                {{ range .config.PerPageOptions }}
+                <option value="{{ . }}" {{ if eq . $.params.PerPage }}selected{{ end }}>{{ . }}</option>
+                {{ end }}
+            </select>
+        </label>
+    </div>
+</div>
+
+<table class="crud-gmcore-table gmui-table">
+    <colgroup>
+        {{ if $bulkEnabled }}
+        <col class="crud-gmcore-col-check">
+        {{ end }}
+        {{ range .config.Columns }}
+        <col>
+        {{ end }}
+        {{ if $actionsEnabled }}<col class="crud-gmcore-col-actions">{{ end }}
+    </colgroup>
+    <thead>
+    <tr>
+        {{ if $bulkEnabled }}
+        <th class="crud-gmcore-check-cell"><input type="checkbox" data-gmcrud-bulk-toggle aria-label="Toggle all"></th>
+        {{ end }}
+        {{ range .config.Columns }}
+        <th data-gmcrud-column="{{ .Field }}">
+            {{ if .Sortable }}
+            <a class="gmui-sort-link" href="#" data-gmcrud-url="/_gmcore/crud/{{ $.config.Name }}?sort={{ .Field }}" data-gmcrud-ajax-link>
+                {{ .LabelKey }}
+                <span class="gmui-sort-indicator" aria-hidden="true">&udarr;</span>
+            </a>
+            {{ else }}
+            {{ .LabelKey }}
+            {{ end }}
+        </th>
+        {{ end }}
+        {{ if $actionsEnabled }}<th>Actions</th>{{ end }}
+    </tr>
+    </thead>
+    <tbody>
+    {{ range .result.displayRows }}
+    <tr class="{{ .rowClass }}">
+        {{ if $bulkEnabled }}
+        <td class="crud-gmcore-check-cell"><input type="checkbox" value="{{ .id }}" data-gmcrud-bulk-item aria-label="Select row"></td>
+        {{ end }}
+        {{ range .cells }}
+        <td data-gmcrud-column="{{ .field }}" data-gmcrud-label="{{ .labelKey }}">
+            {{ if .value }}
+            {{ .value }}
+            {{ else }}
+            &mdash;
+            {{ end }}
+        </td>
+        {{ end }}
+        {{ if $actionsEnabled }}
+        <td data-gmcrud-label="Actions">
+            <div class="gmcrud-action-menu">
+                <button type="button" class="gmui-btn is-ghost is-small" data-gmcrud-actions-toggle data-gmui-actions-toggle>Actions</button>
+                <div class="gmui-action-menu-dropdown" data-gmcrud-actions-menu data-gmui-actions-menu hidden>
+                    {{ range .actions }}
+                    {{ if eq .Name "view" }}
+                    <a href="#" class="gmui-action-item" data-gmcrud-url="/_gmcore/crud/{{ $.config.Name }}/{{ $.id }}" data-gmcrud-modal-link>View</a>
+                    {{ else if eq .Name "edit" }}
+                    <a href="#" class="gmui-action-item" data-gmcrud-url="/_gmcore/crud/{{ $.config.Name }}/{{ $.id }}/edit" data-gmcrud-modal-link>Edit</a>
+                    {{ else if eq .Name "clone" }}
+                    <a href="#" class="gmui-action-item" data-gmcrud-url="/_gmcore/crud/{{ $.config.Name }}/{{ $.id }}/clone" data-gmcrud-modal-link>Clone</a>
+                    {{ else if eq .Name "delete" }}
+                    <form method="post" action="/_gmcore/crud/{{ $.config.Name }}/{{ $.id }}/delete" data-gmcrud-delete-form data-gmcrud-confirm="Are you sure?">
+                        <input type="hidden" name="_token" value="">
+                        <button type="submit" class="gmui-action-item">Delete</button>
+                    </form>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </div>
+        </td>
+        {{ end }}
+    </tr>
+    {{ else }}
+    <tr>
+        <td colspan="99" class="gmui-empty">No records found</td>
+    </tr>
+    {{ end }}
+    </tbody>
+</table>
+
+<div class="crud-gmcore-table-controls crud-gmcore-table-controls-bottom gmui-table-controls">
+    <div class="crud-gmcore-table-control-group crud-gmcore-table-control-group-end gmui-table-control-group gmui-table-control-group-end">
+        <div class="crud-gmcore-pagination gmui-page-nav" aria-label="Pagination">
+            {{ if .result.hasExactTotal }}
+            {{ if eq .result.page 1 }}
+            <button disabled>&laquo;</button>
+            <button disabled>&lsaquo;</button>
+            {{ else }}
+            <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}?page=1" data-gmcrud-ajax-link>&laquo;</a>
+            <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}?page={{ subtract .result.page 1 }}" data-gmcrud-ajax-link>&lsaquo;</a>
+            {{ end }}
+            {{ range .result.totalPages | pages }}
+            <a href="#" {{ if eq . $.result.page }}class="is-active"{{ end }} data-gmcrud-url="/_gmcore/crud/{{ $.config.Name }}?page={{ . }}" data-gmcrud-ajax-link>{{ . }}</a>
+            {{ end }}
+            {{ if ge .result.page .result.totalPages }}
+            <button disabled>&rsaquo;</button>
+            <button disabled>&raquo;</button>
+            {{ else }}
+            <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}?page={{ add .result.page 1 }}" data-gmcrud-ajax-link>&rsaquo;</a>
+            <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}?page={{ .result.totalPages }}" data-gmcrud-ajax-link>&raquo;</a>
+            {{ end }}
+            {{ else }}
+            {{ if eq .result.page 1 }}
+            <button disabled>&lsaquo;</button>
+            {{ else }}
+            <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}?page={{ subtract .result.page 1 }}" data-gmcrud-ajax-link>&lsaquo;</a>
+            {{ end }}
+            <button class="is-active">{{ .result.page }}</button>
+            {{ if not .result.hasMore }}
+            <button disabled>&rsaquo;</button>
+            {{ else }}
+            <a href="#" data-gmcrud-url="/_gmcore/crud/{{ .config.Name }}?page={{ add .result.page 1 }}" data-gmcrud-ajax-link>&rsaquo;</a>
+            {{ end }}
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<div class="crud-gmcore-runtime-meta">
+    <span>CRUD Bundle {{ .crudBundleVersion }}</span>
+    <span>Theme {{ .crudThemeVersion }}</span>
+</div>

@@ -1,0 +1,51 @@
+<div class="crud-gmcore-modal-panel">
+    <div class="crud-gmcore-modal-header">
+        <div class="crud-gmcore-eyebrow">GMCore Admin</div>
+        <h2>{{ if eq .mode "create" }}Create{{ else if eq .mode "clone" }}Clone{{ else }}Edit{{ end }} {{ .config.TitleKey }}</h2>
+        <button type="button" class="crud-gmcore-modal-close" data-gmcrud-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div class="crud-gmcore-modal-body">
+        <form
+            action="{{ .actionUrl }}"
+            method="post"
+            class="crud-gmcore-modal-form-shell"
+            data-gmcrud-modal-form="1"
+            data-gmcrud-form-mode="{{ .mode }}"
+            data-gmcrud-client-hook="{{ .clientHook }}"
+        >
+            <div class="crud-gmcore-form-grid">
+                {{ range .config.Fields }}
+                {{ if .Visible }}
+                <div class="crud-gmcore-field-card" data-gmcrud-form-field="{{ .Name }}">
+                    <div class="crud-gmcore-field-label-row">
+                        <label>{{ .LabelKey }}</label>
+                    </div>
+                    {{ if eq .Widget "textarea" }}
+                    <textarea name="{{ .Name }}" class="gmui-input" rows="4"></textarea>
+                    {{ else if eq .Widget "number" }}
+                    <input type="number" name="{{ .Name }}" class="gmui-input">
+                    {{ else if eq .Widget "date" }}
+                    <input type="date" name="{{ .Name }}" class="gmui-input">
+                    {{ else if eq .Widget "datetime" }}
+                    <input type="datetime-local" name="{{ .Name }}" class="gmui-input">
+                    {{ else if eq .Widget "checkbox" }}
+                    <input type="checkbox" name="{{ .Name }}" value="1" class="gmui-checkbox">
+                    {{ else if eq .Widget "select" }}
+                    <select name="{{ .Name }}" class="gmui-select">
+                        <option value=""></option>
+                        {{ range $val, $label := .Choices }}
+                        <option value="{{ $val }}">{{ $label }}</option>
+                        {{ end }}
+                    </select>
+                    {{ else }}
+                    <input type="{{ .Widget }}" name="{{ .Name }}" class="gmui-input">
+                    {{ end }}
+                </div>
+                {{ end }}
+                {{ end }}
+            </div>
+            <button type="button" class="gmui-btn is-ghost" data-gmcrud-modal-close>Cancel</button>
+            <button type="submit" class="gmui-btn is-primary">Save</button>
+        </form>
+    </div>
+</div>

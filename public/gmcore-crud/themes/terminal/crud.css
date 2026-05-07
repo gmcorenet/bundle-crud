@@ -1,0 +1,13 @@
+/* GMCore CRUD Theme - terminal */
+.gmcrud-theme-terminal {
+  --gmcrud-primary: #10b981;
+  --gmcrud-primary-hover: #059669;
+  --gmcrud-bg: #1e293b;
+  --gmcrud-card-bg: #334155;
+  --gmcrud-border: #475569;
+  --gmcrud-text: #e2e8f0;
+  --gmcrud-text-muted: #94a3b8;
+  --gmcrud-danger: #f87171;
+  --gmcrud-success: #34d399;
+  --gmcrud-warning: #fbbf24;
+}

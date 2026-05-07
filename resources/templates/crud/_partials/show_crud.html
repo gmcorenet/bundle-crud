@@ -1,0 +1,36 @@
+<section
+    class="gmcrud {{ .crudTheme.rootClass }}"
+    data-gmcrud-root
+    data-gmcrud-instance="{{ .crudInstanceId }}"
+    data-gmcrud-resource="{{ .config.Name }}"
+    data-gmcrud-user-key="{{ .userIdentifier }}"
+    data-gmcrud-list-url="/_gmcore/crud/{{ .config.Name }}"
+    data-gmcrud-filters-url="/_gmcore/crud/{{ .config.Name }}/filters/modal"
+    data-gmcrud-bulk-url="/_gmcore/crud/{{ .config.Name }}/bulk"
+    data-gmcrud-bulk-token=""
+    data-gmcrud-designer-token=""
+    data-gmcrud-confirm-title="Confirm"
+    data-gmcrud-confirm-subtitle="Are you sure?"
+    data-gmcrud-confirm-accept="Accept"
+    data-gmcrud-confirm-cancel="Cancel"
+    data-gmcrud-bulk-confirm-title="Bulk Action"
+    data-gmcrud-bulk-confirm-subtitle="This will affect selected records"
+    data-gmcrud-bulk-confirm="Confirm bulk action"
+    data-gmcrud-bulk-empty="No items selected"
+    data-gmcrud-bulk-pending="Selection required"
+    data-gmcrud-search-delay="{{ .crudConfigDefaults.SearchDelayMs }}"
+>
+    <div class="crud-gmcore-shell">
+        <div class="crud-gmcore-section-heading">
+            <h2>{{ .config.TitleKey }}</h2>
+        </div>
+        <div class="gmui-toast-region" data-gmcrud-toasts aria-live="polite" aria-atomic="true"></div>
+        <div data-gmcrud-table>
+            {{ include "crud/_partials/index_content.html" . }}
+        </div>
+    </div>
+</section>
+
+<div class="gmcrud {{ .crudTheme.rootClass }}" data-gmcrud-modal-host>
+    {{ include "crud/_partials/modal_host.html" . }}
+</div>
