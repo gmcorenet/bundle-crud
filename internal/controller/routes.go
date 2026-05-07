@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	gmcore_crud "github.com/gmcorenet/sdk/gmcore-crud"
+	gmcore_crud "github.com/gmcorenet/sdk-gmcore-crud"
 	"github.com/gmcorenet/bundle-crud/internal/export"
 	"github.com/gmcorenet/bundle-crud/internal/filter"
 	"github.com/gmcorenet/bundle-crud/internal/model"

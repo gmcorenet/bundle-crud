@@ -5,7 +5,7 @@ import (
 	"sort"
 	"sync"
 
-	gmcore_crud "github.com/gmcorenet/sdk/gmcore-crud"
+	gmcore_crud "github.com/gmcorenet/sdk-gmcore-crud"
 )
 
 type CrudResource interface {

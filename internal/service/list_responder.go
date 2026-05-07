@@ -1,7 +1,7 @@
 package service
 
 import (
-	gmcore_crud "github.com/gmcorenet/sdk/gmcore-crud"
+	gmcore_crud "github.com/gmcorenet/sdk-gmcore-crud"
 	"github.com/gmcorenet/bundle-crud/internal/model"
 	"github.com/gmcorenet/bundle-crud/internal/registry"
 )

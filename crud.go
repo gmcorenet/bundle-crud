@@ -8,9 +8,9 @@ import (
 	"html/template"
 	"net/http"
 
-	gmcore_crud_sdk "github.com/gmcorenet/sdk/gmcore-crud"
-	gmcore_bundle "github.com/gmcorenet/sdk/gmcore-bundle"
-	gmcore_templating "github.com/gmcorenet/sdk/gmcore-templating"
+	gmcore_crud_sdk "github.com/gmcorenet/sdk-gmcore-crud"
+	gmcore_bundle "github.com/gmcorenet/sdk-gmcore-bundle"
+	gmcore_templating "github.com/gmcorenet/sdk-gmcore-templating"
 	"github.com/gmcorenet/bundle-crud/internal/controller"
 	"github.com/gmcorenet/bundle-crud/internal/export"
 	"github.com/gmcorenet/bundle-crud/internal/filter"
